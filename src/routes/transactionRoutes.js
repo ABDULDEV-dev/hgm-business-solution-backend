@@ -1,6 +1,6 @@
 import express from "express"
 import { createTransaction, getTransactions, getTransactionById } from "../controllers/transactionController.js"
-import { authenticate } from "../middleware/auth.js"
+import { authenticate } from "../middlewares/auth.js"
 
 const router = express.Router()
 

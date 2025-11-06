@@ -20,28 +20,29 @@
   },
   "homepage": "https://github.com/ABDULDEV-dev/hgm-business-solution-backend#readme",
   "devDependencies": {
-    "nodemon": "^3.1.10",
+    "@types/node": "24.10.0",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
-    "@types/node": "24.10.0",
+    "nodemon": "^3.1.10",
+    "postcss": "8.5.6",
     "tailwindcss": "^4.1.9",
-    "typescript": "5.9.3",
-    "postcss": "8.5.6"
+    "typescript": "5.9.3"
   },
   "dependencies": {
     "axios": "^1.13.2",
     "bcryptjs": "^3.0.3",
+    "class-variance-authority": "0.7.1",
+    "clsx": "2.1.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
+    "lucide-react": "0.552.0",
+    "mongodb": "^7.0.0",
     "mongoose": "^8.19.3",
     "next": "16.0.1",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "class-variance-authority": "0.7.1",
-    "clsx": "2.1.1",
-    "lucide-react": "0.552.0",
     "tailwind-merge": "3.3.1",
     "tailwindcss-animate": "1.0.7"
   }

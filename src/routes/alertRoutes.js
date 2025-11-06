@@ -1,6 +1,6 @@
 import express from "express"
 import { createAlert, getAlerts, resolveAlert } from "../controllers/alertController.js"
-import { authenticate } from "../middleware/auth.js"
+import { authenticate } from "../middlewares/auth.js"
 
 const router = express.Router()
 

@@ -1,53 +1,59 @@
-import mongoose from "mongoose"
+import { DataTypes } from "sequelize"
+import { sequelize } from "../config/database.js"
 
-const productSchema = new mongoose.Schema(
+const Product = sequelize.define(
+  "Product",
   {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     productId: {
-      type: String,
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
       unique: true,
     },
     name: {
-      type: String,
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     category: {
-      type: String,
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     quantity: {
-      type: Number,
-      required: true,
-      default: 0,
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
     },
     minQuantity: {
-      type: Number,
-      required: true,
-      default: 10,
+      type: DataTypes.INTEGER,
+      defaultValue: 10,
     },
     maxQuantity: {
-      type: Number,
-      required: true,
-      default: 100,
+      type: DataTypes.INTEGER,
+      defaultValue: 100,
     },
     unitPrice: {
-      type: Number,
-      required: true,
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
     },
     supplier: {
-      type: String,
+      type: DataTypes.STRING,
     },
     expiryDate: {
-      type: Date,
+      type: DataTypes.DATE,
     },
     location: {
-      type: String,
+      type: DataTypes.STRING,
     },
     description: {
-      type: String,
+      type: DataTypes.TEXT,
     },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+  },
 )
 
-export default mongoose.model("Product", productSchema)
+export default Product

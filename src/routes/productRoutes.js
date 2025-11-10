@@ -5,7 +5,7 @@ import {
   getProductById,
   updateProduct,
   deleteProduct,
-} from "./controllers/productController.js"
+} from "../controllers/productController.js"
 import { authenticate } from "../middlewares/auth.js"
 
 const router = express.Router()

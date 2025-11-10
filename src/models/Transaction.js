@@ -1,43 +1,57 @@
-import mongoose from "mongoose"
+import { DataTypes } from "sequelize"
+import { sequelize } from "../config/database.js"
 
-const transactionSchema = new mongoose.Schema(
+const Transaction = sequelize.define(
+  "Transaction",
   {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     transactionId: {
-      type: String,
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
       unique: true,
     },
     type: {
-      type: String,
-      enum: ["inbound", "outbound", "adjustment"],
-      required: true,
+      type: DataTypes.ENUM("inbound", "outbound", "adjustment"),
+      allowNull: false,
     },
     productId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-      required: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "Products",
+        key: "id",
+      },
     },
     quantity: {
-      type: Number,
-      required: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     reason: {
-      type: String,
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "Users",
+        key: "id",
+      },
     },
     notes: {
-      type: String,
+      type: DataTypes.TEXT,
     },
     referenceNo: {
-      type: String,
+      type: DataTypes.STRING,
     },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+  },
 )
 
-export default mongoose.model("Transaction", transactionSchema)
+export default Transaction

@@ -39,7 +39,7 @@ app.get("/api/health", (req, res) => {
 })
 
 // Error Handler (must be last)
-app.use(errorHandler)
+// app.use(errorHandler)
 
 // Start Server
 const PORT = process.env.PORT || 5000

@@ -1,48 +1,57 @@
-import express from "express"
-import cors from "cors"
-import dotenv from "dotenv"
-import connectDB from "./config/database.js"
-import authRoutes from "./routes/authRoutes.js"
-import productRoutes from "./routes/productRoutes.js"
-import transactionRoutes from "./routes/transactionRoutes.js"
-import alertRoutes from "./routes/alertRoutes.js"
-import userRoutes from "./routes/userRoutes.js"
-import { errorHandler } from "./middlewares/errorHandler.js"
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import { connectDB } from "./config/database.js"; // named export in your database.js
+import authRoutes from "./routes/authRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
+import transactionRoutes from "./routes/transactionRoutes.js";
+import alertRoutes from "./routes/alertRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
 
-dotenv.config()
+dotenv.config();
 
-const app = express()
+const app = express();
 
-// Middleware
+// middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// CORS
+const corsOrigin = process.env.CORS_ORIGIN || "http://localhost:5173";
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+    origin: corsOrigin,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
-  }),
-)
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+  })
+);
 
-// Connect to Database
-connectDB()
+// mount routes under /api
+app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/transactions", transactionRoutes);
+app.use("/api/alerts", alertRoutes);
+app.use("/api/users", userRoutes);
 
-// Routes
-app.use("/api/auth", authRoutes)
-app.use("/api/products", productRoutes)
-app.use("/api/transactions", transactionRoutes)
-app.use("/api/alerts", alertRoutes)
-app.use("/api/users", userRoutes)
-
-// Health Check
+// basic health check
 app.get("/api/health", (req, res) => {
-  res.status(200).json({ message: "Server is running" })
-})
+  res.status(200).json({ message: "Server is running" });
+});
 
-// Error Handler (must be last)
-// app.use(errorHandler)
+// error handler (must be after routes)
+app.use(errorHandler);
 
-// Start Server
-const PORT = process.env.PORT || 5000
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+const PORT = process.env.PORT || 5000;
+
+(async () => {
+  try {
+    await connectDB(); // ensure DB connected & models synced before listening
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (err) {
+    console.error("Failed to start server:", err);
+    process.exit(1);
+  }
+})();
